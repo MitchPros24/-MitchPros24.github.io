@@ -69,7 +69,7 @@ function App() {
       <main>
         <section className="hero" id="home">
           <div className="hero-glow" />
-          <img className="hero-photo" src="/ken.jpg" alt="Ken Lloyd, video editor" />
+          <img className="hero-photo" src={`${import.meta.env.BASE_URL}ken.jpg`} alt="Ken Lloyd, video editor" />
           <p className="eyebrow">VIDEO EDITOR · AVAILABLE FOR HIRE</p>
           <h1>I EDIT<br /><span>STORIES.</span></h1>
           <p className="intro">I'm a video editor who turns raw footage into polished videos, with sharp pacing, strong sound, and clean color that keep people watching.</p>
