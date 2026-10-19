@@ -15,25 +15,42 @@ const tools = [
   { name: "CapCut", use: "Short-form & quick edits" },
 ];
 const videos = [
-  { id: "0IPwauyTUQI", title: "Debut Highlight Film", category: "HIGHLIGHT EDIT", description: "A cinematic highlight edit cut for emotion, pacing, and music, turning a full event into a story worth rewatching." },
-  { id: "Tq91HTAyLqs", title: "Promo Edit", category: "PROMO EDIT", description: "A fast, polished promotional edit built to grab attention and communicate the message clearly." },
-  { id: "pS4tRSdv_UA", title: "Short-Form Hooks", category: "SHORT-FORM EDIT", description: "Scroll-stopping hooks and tight cuts designed for retention on short-form platforms." },
-  { id: "a6O9w7slpKE", title: "Pre-Debut Teaser", category: "TEASER EDIT", description: "A teaser edit that builds anticipation with rhythm, transitions, and sound design." },
+  { id: "0IPwauyTUQI", title: "The Debut: Highlight Film", category: "HIGHLIGHT EDIT", description: "A cinematic highlight edit cut for emotion, pacing, and music, turning a full event into a story worth rewatching." },
+  { id: "a6O9w7slpKE", title: "Before the Debut: Teaser", category: "TEASER EDIT", description: "A teaser edit that builds anticipation with rhythm, transitions, and sound design." },
+  { id: "39-gDRkkvXc", title: "Prom Night: Highlight Edit", category: "EVENT EDIT", description: "An event edit that captures the mood, the people, and the best moments of the night." },
+  { id: "9OQvkz6FUZU", title: "Intramurals: Hook Edit", category: "HOOK EDIT", description: "A high-energy hook edit made to grab attention in the first seconds." },
+  { id: "Tq91HTAyLqs", title: "Promo Cut", category: "PROMO EDIT", description: "A fast, polished promotional edit built to grab attention and communicate the message clearly." },
+  { id: "pS4tRSdv_UA", title: "Hook Reel", category: "SHORT-FORM EDIT", description: "Scroll-stopping hooks and tight cuts designed for retention on short-form platforms." },
+  { id: "665jY_Nvl5g", title: "Short-Form Cut", category: "SHORT-FORM EDIT", description: "A short-form edit with tight pacing and strong visuals built for social media." },
 ];
 
-
 function VideoCard({ video, index }) {
+  const [playing, setPlaying] = useState(false);
+  const thumb = video.thumb || `https://i.ytimg.com/vi/${video.id}/maxresdefault.jpg`;
+  const backup = `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`;
+
   return (
     <article className="video-card">
       <div className="video-frame">
-        <iframe
-          src={`https://www.youtube-nocookie.com/embed/${video.id}`}
-          title={video.title}
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        />
+        {playing ? (
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1`}
+            title={video.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        ) : (
+          <button className="thumb-btn" type="button" onClick={() => setPlaying(true)} aria-label={`Play ${video.title}`}>
+            <img
+              src={thumb}
+              alt={video.title}
+              loading="lazy"
+              onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = backup; }}
+            />
+            <span className="thumb-play">▶</span>
+          </button>
+        )}
       </div>
       <div className="video-meta"><span>{video.category}</span><span>0{index + 1}</span></div>
       <h3>{video.title}</h3>
